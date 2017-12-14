@@ -88,14 +88,10 @@ def insertRows(table, schema, rows, user=CARTO_USER, key=CARTO_KEY):
 
 def blockInsertRows(table, schema, rows, user=CARTO_USER, key=CARTO_KEY, blocksize=1000):
     # iterate in blocks
-    if len(rows)>blocksize:
-        for i in range(len(rows)//blocksize):
-            # success or return False
-            if not insertRows(table, schema, rows[:blocksize], user, key):
-                return False
-            rows = rows[blocksize:]
-    if not insertRows(table, schema, rows, user, key):
-        return False
+    while len(rows):
+        if not insertRows(table, schema, rows[:blocksize], user, key):
+            return False
+        rows = rows[blocksize:]
     return True
 
 def deleteRows(table, where, user=CARTO_USER, key=CARTO_KEY):
@@ -105,3 +101,7 @@ def deleteRows(table, where, user=CARTO_USER, key=CARTO_KEY):
 def deleteRowsByIDs(table, id_field, ids, user=CARTO_USER, key=CARTO_KEY):
     where = '{} in ({})'.format(id_field, ','.join(ids))
     return deleteRows(table, where, user, key)
+
+def dropTable(table, user=CARTO_USER, key=CARTO_KEY):
+    sql = 'DROP TABLE "{}"'.format(table)
+    return post(sql)
