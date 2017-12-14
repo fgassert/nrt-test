@@ -1,19 +1,20 @@
-# Python scripts in docker environment
-To create your own script, you do a fork of this repository and change the next variable:
+# NRT Test
 
-## Init
-In start.sh change the NAME environment variable with the name of your application.
+Dockerized Python3 script to download data and insert into CARTO table.
 
-## Develop
+### Usage
 
-You can develop all your code inside the src folder. Always the script execute the __init__.py file.
+Requires Docker.
 
-If you need share files with your scripts files, you can put these in data folder. This folder is shared betwen docker and the host machine.
-And if you need download the results of execution, you save these files in data folder too.
+`./start.sh` Build container and run script once.
 
-## Execution
+### Modify
 
-Execute the next command in your console inside of your root folder (node or python)
-```
-./start.sh
-```
+`Dockerfile` Define requirements here.
+
+`.env.sample` Copy to .env to and add CARTO username and API key.
+
+`src\__init__.py` Contains core logic for downloading, formatting, and uploading data.
+
+`src\carto.py` Utility library for interacting with CARTO.
+
