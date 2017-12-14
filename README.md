@@ -1,12 +1,14 @@
 # NRT Test
 
-Dockerized Python3 script to download data and insert into CARTO table.
+Dockerized Python3 cron script to download data and insert into CARTO table.
 
 ### Usage
 
 Requires Docker.
 
 `./start.sh` Build container and run script once.
+
+Run with `docker run` to start cron.
 
 ### Modify
 
@@ -18,3 +20,4 @@ Requires Docker.
 
 `src\carto.py` Utility library for interacting with CARTO.
 
+`time.cron` Crontab frequency.

@@ -1,5 +1,5 @@
 .env
-.py[c|o]
+*.py[c|o]
 .DS_Store
 
 data/*

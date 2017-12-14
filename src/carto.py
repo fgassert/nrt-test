@@ -46,13 +46,10 @@ def getFields(fields='*', table='', user=CARTO_USER, key=CARTO_KEY, where='', or
 
 def getTables():
     r = get('SELECT * FROM CDB_UserTables()', f='csv')
-    return r.split("\r\n")[1:]
+    return r.split("\r\n")[1:-1]
 
 def tableExists(table):
-    if table in getTables():
-        return True
-    else:
-        return False
+    return table in getTables()
 
 def createTable(table, schema, user=CARTO_USER, key=CARTO_KEY):
     defslist = ['{} {}'.format(k, v) for k, v in schema.items()]
@@ -83,8 +80,8 @@ def _dumpRows(rows, dtypes):
     return u','.join(dumpedRows)
 
 def insertRows(table, schema, rows, user=CARTO_USER, key=CARTO_KEY):
-    fields = schema.keys()
-    dtypes = schema.values()
+    fields = tuple(schema.keys())
+    dtypes = tuple(schema.values())
     values = _dumpRows(rows, dtypes)
     sql = u'INSERT INTO "{}" ({}) VALUES {}'.format(table, u', '.join(fields), values)
     return post(sql, user, key)
@@ -94,9 +91,9 @@ def blockInsertRows(table, schema, rows, user=CARTO_USER, key=CARTO_KEY, blocksi
     if len(rows)>blocksize:
         for i in range(len(rows)//blocksize):
             # success or return False
-            if not insertRows(table, schema, rows[i*blocksize:(i+1)*blocksize], user, key):
+            if not insertRows(table, schema, rows[:blocksize], user, key):
                 return False
-        rows = rows[(i+1)*blocksize:]
+            rows = rows[blocksize:]
     if not insertRows(table, schema, rows, user, key):
         return False
     return True
