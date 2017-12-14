@@ -1,0 +1,8 @@
+.env
+.py[c|o]
+
+data/*
+__pycache__
+
+*.csv
+*#
