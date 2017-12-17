@@ -1,36 +1,28 @@
 FROM python:3.6
 MAINTAINER Francis Gassert <fgassert@wri.org>
-ARG NAME=python-script
+
+# set name
+ARG NAME=nrt-script
 ENV NAME ${NAME}
 
 # install core libraries
 RUN apt-get update
-RUN apt-get install -y cron gdal-bin libgdal-dev
+RUN apt-get install -y cron
 
-# install python libraries
-RUN pip install requests fiona
+# install application libraries
+RUN apt-get install -y gdal-bin libgdal-dev
+RUN pip install requests
+RUN pip install fiona
 
 # Copy the application folder inside the container
-RUN mkdir -p /opt/$NAME && cd /opt/$NAME
-COPY main.py /opt/$NAME/
-COPY ./src /opt/$NAME/src
-COPY ./data /opt/$NAME/data
-COPY time.cron /opt/$NAME/
+RUN mkdir -p /opt/$NAME/data
+WORKDIR /opt/$NAME/
+COPY contents/ .
+VOLUME ./data
 
-# Add user
-RUN addgroup $NAME && adduser --disabled-password --ingroup $NAME $NAME
-RUN chown $NAME:$NAME /opt/$NAME
-
-WORKDIR /opt/$NAME
-VOLUME /opt/$NAME/data
-
-# Add job to crontab
-RUN echo "$(cat time.cron) cd /opt/$NAME/ && python main.py" > cron.tmp && \
-    crontab -u $NAME cron.tmp && \
-    rm cron.tmp
-
-# Launch cron
-CMD ["crond", "-f", "-d", "2"]
+# Init crontab with user
+RUN chmod +x cron-start.sh
+CMD ["./cron-start.sh"]
 
 # Launch script
 # CMD ["python", "main.py"]

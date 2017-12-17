@@ -6,18 +6,20 @@ Dockerized Python3 cron script to download data and insert into CARTO table.
 
 Requires Docker.
 
-`./start.sh` Build container and run script once.
+`.env.sample` Copy to `.env` and add keys.
 
-Run with `docker run` to start cron.
+`./run.sh` Build container and run script once.
+
+`./run-cron.sh` Build container and start cron.
 
 ### Modify
 
 `Dockerfile` Define requirements here.
 
-`.env.sample` Copy to .env to and add CARTO username and API key.
+`contents\` Copied into container.
 
-`src\__init__.py` Contains core logic for downloading, formatting, and uploading data.
+`contents\src\__init__.py` Contains core logic for downloading, formatting, and uploading data.
 
-`src\carto.py` Utility library for interacting with CARTO.
+`contents\src\carto.py` Utility library for interacting with CARTO.
 
-`time.cron` Crontab frequency.
+`contents\time.cron` Set crontab frequency here.

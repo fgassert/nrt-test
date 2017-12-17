@@ -2,7 +2,7 @@
 *.py[c|o]
 .DS_Store
 
-data/*
+contents/data/*
 __pycache__
 
 *.csv
