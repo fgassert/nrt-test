@@ -2,4 +2,4 @@
 NAME=nrt-test
 
 docker build -t $NAME --build-arg NAME=$NAME .
-docker run -v $(pwd)/contents/data:/opt/$NAME/data --name $NAME --env-file .env --rm $NAME
+docker run -v $(pwd)/data:/opt/$NAME/data --env-file .env --rm $NAME

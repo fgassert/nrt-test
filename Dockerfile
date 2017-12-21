@@ -18,6 +18,7 @@ RUN pip install fiona
 RUN mkdir -p /opt/$NAME/data
 WORKDIR /opt/$NAME/
 COPY contents/ .
+COPY time.cron .
 VOLUME ./data
 
 # Init crontab with user
