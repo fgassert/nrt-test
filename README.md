@@ -8,13 +8,15 @@ Requires Docker.
 
 `.env.sample` Copy to `.env` and add keys.
 
-`./run.sh` Build container and run script once.
+`./start.sh` Build container and run script once.
 
-`./run-cron.sh` Build container and start cron.
+`./run-cron.sh` Build container with cron inside!.
 
 ### Modify
 
 `Dockerfile` Define requirements here.
+
+`time.cron` Set crontab frequency here.
 
 `contents\` Copied into container.
 
@@ -22,4 +24,4 @@ Requires Docker.
 
 `contents\src\carto.py` Utility library for interacting with CARTO.
 
-`contents\time.cron` Set crontab frequency here.
+

@@ -1,0 +1,21 @@
+!table
+!version 300
+!charset WindowsLatin1
+
+Definition Table
+  Type NATIVE Charset "WindowsLatin1"
+  Fields 14
+    ID Integer Index 1 ;
+    GlideNumber Char (35) Index 2 ;
+    Country Char (35) ;
+    OtherCountry Char (35) ;
+    long Float ;
+    lat Float ;
+    Area Float ;
+    Began Date Index 3 ;
+    Ended Date ;
+    Validation Char (35) ;
+    Dead Integer Index 4 ;
+    Displaced Integer ;
+    MainCause Char (35) ;
+    Severity Float ;
